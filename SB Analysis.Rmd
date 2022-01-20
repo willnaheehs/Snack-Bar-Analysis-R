@@ -1,0 +1,48 @@
+---
+title: "Snack Bar Analysis"
+author: "Will Sheehan"
+date: "21/12/2021"
+output: pdf_document
+ 
+---
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(tidyverse)
+SB_data <- read_excel("~/Downloads/SB data.xlsx")
+summary(SB_data)
+```
+
+```{r}
+# Used for cleaning names
+install.packages("janitor")
+library(janitor) 
+# removes spaces and uppercase from col names
+SB_data <- SB_data %>%
+  clean_names()
+SB_data
+```
+
+## Visual Representations of Inventory Metrics
+
+```{r SB_data products over time}
+
+ggplot(SB_data, aes(purchase_time, product))+
+  geom_point()
+```
+
+```{r SB_data product quantity per order}
+
+ggplot(SB_data, aes (product, quantity))+
+  geom_point()
+```
+
+## These two charts reveal two important peices of information:
+* Popcorn and pop are very popular in the summertime
+* Freezies and Candy/Chocolate are frequently bought in larger amounts, which should be considered when restocking
+
+##Condiderations:
+
+* This data will be heavily influenced by when the SB is open/ when events are happening
+* This data is pulled from a range of time that was drastically skewed due to the pandemic, and not a great representation of overall SB performance

@@ -1,0 +1,56 @@
+---
+title: "Snack Bar Analysis"
+author: "Will Sheehan"
+date: "24/12/2021"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
+---
+```{r message = FALSE}
+library(readxl)
+library(ggplot2)
+library(tidyverse)
+library(janitor) #for cleaning col names
+SB_data <- read_excel("~/Downloads/SB data.xlsx")
+summary(SB_data)
+```
+
+```{r}
+ggplot(SB_data, aes(Quantity, Product))+
+  geom_point()
+```
+
+### This chart is useful when paired with the "Number of Orders Where Each Item was Purchased" chart
+* While the previous chart displays the amount of orders containing any given item, this chart displays the quantities each item is most frequently purchased in (per single order). By pairing the two, we can see the need to have a very strong supply of popcorn, pop, freezies, sour keys and slushies. 
+
+* Popcorn, freezies, pop and chocolate/candy are often bought in higher numbers
+This information should be factored into the restocking process 
+
+```{r include = FALSE}
+# removes spaces and uppercase from col names
+SB_data <- SB_data %>%
+  clean_names()
+SB_data
+```
+```{r warning = FALSE}
+
+p1 <- ggplot(SB_data, aes(purchase_time, product))+
+  geom_point() + labs(x = "Date", y = "Product Purchased")
+p1
+```
+
+### This chart displays the items purchased over time
+* The month of August was very busy, with most items being ordered frequently
+* Hot dogs and slushies were not popular in August. This could be due to a lack of stock or a failure to have the item prepared
+* It is possible that this data would simply align with the hours of operation, thus rendering this chart obsolete
+
+### Condiderations:
+
+* This data will be heavily influenced by when the SB is open/ when events are happening
+* This data is pulled from a range of time that was drastically skewed due to the pandemic, and therefore not a completely accurate representation of overall SB performance
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
